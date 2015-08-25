@@ -16,7 +16,7 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
     if scope.item.isFolder
       if scope.item.isOpened
         scope.item.isOpened = false
-        element.next('ul').remove()
+        element.siblings('ul').remove()
         return
 
       scope.item.isOpened = true

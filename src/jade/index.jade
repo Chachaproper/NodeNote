@@ -23,9 +23,10 @@ html
             ul.list-group
               li.list-group-item(
                 ng-repeat='item in tree.children'
-                ng-class='{active: item.isOpened == true}'
+                ng-class='{selected: item.isOpened == true}'
               )
                 span(ng-click='open($event)') {{ item.name }}
+                span.badge {{ item.children.length }}
         .col-md-8
           textarea(ng-model='text' ui-tinymce)
 
@@ -35,6 +36,7 @@ script#test(type='text/ng-template')
   ul.list-group
     li.list-group-item(
       ng-repeat='item in item.children'
-      ng-class='{active: item.isOpened == true}'
+      ng-class='{selected: item.isOpened == true}'
     )
       span(ng-click='open($event)') {{ item.name }}
+      span.badge {{ item.children.length }}
