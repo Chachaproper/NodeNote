@@ -26,6 +26,7 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
 
     $scope.text = fs.readFileSync scope.item.path, 'utf8'
     $scope.currentFilePath = scope.item.path
+    tinyMCE.activeEditor.setContent $scope.text
 
 
   $scope.save = (filePath) ->
