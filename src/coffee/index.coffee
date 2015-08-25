@@ -5,27 +5,33 @@ app = angular.module 'nodeNote', ['ui.tinymce']
 app.controller 'DirectoryTree', ($scope, $compile) ->
   $scope.tree = getDirTree '.'
   $scope.text = ''
-  $scope.currentFilePath = ''
+  $scope.currentOpenFile = null
 
 
   $scope.open = (e) ->
     template = angular.element(document.querySelector('#test')).html()
-    scope = angular.element(e.target).scope()
+    element = $ e.target
+    scope = element.scope()
 
     if scope.item.isFolder
       if scope.item.isOpened
         scope.item.isOpened = false
-        angular.element(e.target).next('ul').remove()
+        element.next('ul').remove()
         return
 
       scope.item.isOpened = true
       template = $compile(template)(scope)
-      angular.element(e.target).parent().append template
+      element.parent().append template
 
       return
 
+    scope.item.isOpened = true
+
+    if $scope.currentOpenFile
+      $scope.currentOpenFile.item.isOpened = false
+
+    $scope.currentOpenFile = scope
     $scope.text = fs.readFileSync scope.item.path, 'utf8'
-    $scope.currentFilePath = scope.item.path
     tinyMCE.activeEditor.setContent $scope.text
 
 

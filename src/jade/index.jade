@@ -2,20 +2,35 @@ html
   head
     meta(charset='UTF-8')
     title NodeNode
+    link(
+      href='node_modules/bootstrap/dist/css/bootstrap.min.css'
+      rel='stylesheet'
+    )
 
     include parts/scripts
 
   body(ng-app='nodeNote')
-    div(ng-controller='DirectoryTree')
-      button(ng-click='save(currentFilePath)') Save
+    .container-fluid
+      .row
+        .col-md-4
+          div(ng-controller='DirectoryTree')
+            button(ng-click='save(currentFilePath)') Save
 
-      ul
-        li(ng-repeat='item in tree.children')
-          span(ng-click='open($event)') {{ item.name }}
+            ul.list-group
+              li.list-group-item(
+                ng-repeat='item in tree.children'
+                ng-class='{active: item.isOpened == true}'
+              )
+                span(ng-click='open($event)') {{ item.name }}
+        .col-md-8
+          textarea(ng-model='text' ui-tinymce)
 
-      textarea(ng-model='text' ui-tinymce)
+
 
 script#test(type='text/ng-template')
-  ul
-    li(ng-repeat='item in item.children')
+  ul.list-group
+    li.list-group-item(
+      ng-repeat='item in item.children'
+      ng-class='{active: item.isOpened == true}'
+    )
       span(ng-click='open($event)') {{ item.name }}
