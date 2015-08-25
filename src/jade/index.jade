@@ -20,18 +20,7 @@ html
           div(ng-controller='DirectoryTree')
             button(ng-click='save(currentOpenFileScope.item.path)') Save
 
-            ul.list-group
-              li.list-group-item(
-                ng-repeat='item in tree.children'
-                ng-class='{selected: item.isOpened == true}'
-              )
-                span.glyphicon(
-                  ng-if='item.isFolder == true'
-                  ng-class='item.isOpened == true ? "glyphicon-folder-open" : "glyphicon-folder-close"'
-                )
-                span(ng-click='open($event)') {{ item.name }}
-                span.badge(ng-if='item.isFolder == true') {{ getNoteCount(item.children) }}
-
+            include parts/directory-tree
         .col-md-8
           textarea(ng-model='text' ui-tinymce)
 

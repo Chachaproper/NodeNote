@@ -4,6 +4,7 @@ app = angular.module 'nodeNote', ['ui.tinymce']
 
 app.controller 'DirectoryTree', ($scope, $compile) ->
   $scope.tree = fl.getDirTree '.'
+  $scope.tree = _.sortBy($scope.tree.children, 'isFolder').reverse()
   $scope.text = ''
   $scope.currentOpenFileScope = null
 
@@ -38,6 +39,7 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
     content = tinyMCE.activeEditor.getContent()
     stream = fs.createWriteStream filePath
     stream.write content
+
 
   $scope.getNoteCount = (parent) ->
     count = 0
