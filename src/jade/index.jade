@@ -25,6 +25,10 @@ html
                 ng-repeat='item in tree.children'
                 ng-class='{selected: item.isOpened == true}'
               )
+                span.glyphicon(
+                  ng-if='item.isFolder == true'
+                  ng-class='item.isOpened == true ? "glyphicon-folder-open" : "glyphicon-folder-close"'
+                )
                 span(ng-click='open($event)') {{ item.name }}
                 span.badge {{ item.children.length }}
         .col-md-8
@@ -38,5 +42,9 @@ script#test(type='text/ng-template')
       ng-repeat='item in item.children'
       ng-class='{selected: item.isOpened == true}'
     )
+      span.glyphicon(
+        ng-if='item.isFolder == true'
+        ng-class='item.isOpened == true ? "glyphicon-folder-open" : "glyphicon-folder-close"'
+      )
       span(ng-click='open($event)') {{ item.name }}
       span.badge {{ item.children.length }}
