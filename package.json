@@ -27,6 +27,7 @@
     "bootstrap": "^3.3.5",
     "jquery": "^2.1.4",
     "nw": "^0.12.3",
-    "tinymce": "^4.2.4"
+    "tinymce": "^4.2.4",
+    "underscore": "^1.8.3"
   }
 }

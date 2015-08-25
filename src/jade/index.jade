@@ -30,7 +30,8 @@ html
                   ng-class='item.isOpened == true ? "glyphicon-folder-open" : "glyphicon-folder-close"'
                 )
                 span(ng-click='open($event)') {{ item.name }}
-                span.badge {{ item.children.length }}
+                span.badge(ng-if='item.isFolder == true') {{ getNoteCount(item.children) }}
+
         .col-md-8
           textarea(ng-model='text' ui-tinymce)
 
@@ -47,4 +48,4 @@ script#test(type='text/ng-template')
         ng-class='item.isOpened == true ? "glyphicon-folder-open" : "glyphicon-folder-close"'
       )
       span(ng-click='open($event)') {{ item.name }}
-      span.badge {{ item.children.length }}
+      span.badge(ng-if='item.isFolder == true') {{ getNoteCount(item.children) }}

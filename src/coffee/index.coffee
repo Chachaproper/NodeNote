@@ -3,7 +3,7 @@ fs = require 'fs'
 app = angular.module 'nodeNote', ['ui.tinymce']
 
 app.controller 'DirectoryTree', ($scope, $compile) ->
-  $scope.tree = getDirTree '.'
+  $scope.tree = fl.getDirTree '.'
   $scope.text = ''
   $scope.currentOpenFileScope = null
 
@@ -38,4 +38,13 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
     content = tinyMCE.activeEditor.getContent()
     stream = fs.createWriteStream filePath
     stream.write content
+
+  $scope.getNoteCount = (parent) ->
+    count = 0
+
+    for item in parent
+      if not item.isFolder
+        ++count
+
+    return count
 
