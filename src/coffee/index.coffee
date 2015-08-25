@@ -9,7 +9,7 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
 
 
   $scope.open = (e) ->
-    template = angular.element(document.querySelector('#test')).html()
+    template = $('#test').html()
     element = $ e.target
     scope = element.scope()
 
@@ -22,7 +22,6 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
       scope.item.isOpened = true
       template = $compile(template)(scope)
       element.parent().append template
-
       return
 
     scope.item.isOpened = true
@@ -36,6 +35,7 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
 
 
   $scope.save = (filePath) ->
+    content = tinyMCE.activeEditor.getContent()
     stream = fs.createWriteStream filePath
-    stream.write $scope.text
+    stream.write content
 
