@@ -1,0 +1,21 @@
+html
+  head
+    meta(charset='UTF-8')
+    title NodeNode
+
+    include parts/scripts
+
+  body(ng-app='nodeNote')
+    div(ng-controller='DirectoryTree')
+      button(ng-click='save(currentFilePath)') Save
+
+      ul
+        li(ng-repeat='item in tree.children')
+          span(ng-click='open($event)') {{ item.name }}
+
+      textarea(ng-model='text' ui-tinymce)
+
+script#test(type='text/ng-template')
+  ul
+    li(ng-repeat='item in item.children')
+      span(ng-click='open($event)') {{ item.name }}
