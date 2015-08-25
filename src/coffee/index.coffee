@@ -5,7 +5,7 @@ app = angular.module 'nodeNote', ['ui.tinymce']
 app.controller 'DirectoryTree', ($scope, $compile) ->
   $scope.tree = getDirTree '.'
   $scope.text = ''
-  $scope.currentOpenFile = null
+  $scope.currentOpenFileScope = null
 
 
   $scope.open = (e) ->
@@ -27,10 +27,10 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
 
     scope.item.isOpened = true
 
-    if $scope.currentOpenFile
-      $scope.currentOpenFile.item.isOpened = false
+    if $scope.currentOpenFileScope
+      $scope.currentOpenFileScope.item.isOpened = false
 
-    $scope.currentOpenFile = scope
+    $scope.currentOpenFileScope = scope
     $scope.text = fs.readFileSync scope.item.path, 'utf8'
     tinyMCE.activeEditor.setContent $scope.text
 
