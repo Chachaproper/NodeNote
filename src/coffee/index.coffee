@@ -9,7 +9,7 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
   $scope.treeTemplate = $('#dir-tree-tpl').html()
 
   $scope.open = (e) ->
-    element = $ e.target
+    element = $ e.currentTarget
     scope = element.scope()
 
     if scope.item.isFolder
@@ -19,8 +19,10 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
         return
 
       scope.item.isOpened = true
-      template = $compile($scope.treeTemplate)(scope)
-      element.parent().append template
+
+      if scope.item.children.length
+        template = $compile($scope.treeTemplate)(scope)
+        element.parent().append template
       return
 
     scope.item.isOpened = true

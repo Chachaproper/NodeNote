@@ -1,12 +1,13 @@
 mixin dirTree(resource)
   ul.list-group
     li.list-group-item(
-      ng-repeat='item in resource'
+      ng-repeat='item in #{resource}'
       ng-class='{selected: item.isOpened == true}'
     )
-      span.glyphicon(
-        ng-if='item.isFolder == true'
-        ng-class='item.isOpened == true ? "glyphicon-folder-open" : "glyphicon-folder-close"'
-      )
-      span(ng-click='open($event)') {{ item.name }}
-      span.badge(ng-if='item.isFolder == true') {{ getNoteCount(item.children) }}
+      .list-group-item-inner(ng-click='open($event)')
+        span.glyphicon(
+          ng-if='item.isFolder == true'
+          ng-class='item.isOpened == true ? "glyphicon-folder-open" : "glyphicon-folder-close"'
+        )
+        span {{ item.name }}
+        span.badge(ng-if='item.isFolder == true') {{ getNoteCount(item.children) }}
