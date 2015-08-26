@@ -11,9 +11,7 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
 
   $scope.open = (e) ->
     element = $ e.currentTarget
-    console.log element
     scope = element.scope()
-    console.log scope
 
     if scope.item.isFolder
       if scope.item.isOpened
@@ -33,7 +31,10 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
     scope.item.isOpened = true
 
     if $scope.currentOpenFileScope
-      $scope.currentOpenFileScope.item.isOpened = false
+      if $scope.currentOpenFileScope.item.path != scope.item.path
+        $scope.currentOpenFileScope.item.isOpened = false
+      else
+        return
 
     $scope.currentOpenFileScope = scope
     $scope.text = fs.readFileSync scope.item.path, 'utf8'

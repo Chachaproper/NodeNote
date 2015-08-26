@@ -17,9 +17,12 @@ mixin notesList(notes)
   ul.list-group
     li.list-group-item(
       ng-repeat='item in #{notes}'
-      ng-class='{selected: item.isOpened == true}'
       ng-if='item.isFolder == false'
     )
-      .list-group-item-inner(ng-click='open($event)')
+      .list-group-item-inner(
+        ng-click='open($event)'
+        ng-class='{active: item.isOpened == true}'
+      )
+        span.glyphicon.glyphicon-file
         span {{ item.name }}
 
