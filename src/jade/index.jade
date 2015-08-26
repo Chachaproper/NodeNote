@@ -21,7 +21,7 @@ html
       .row(ng-controller='DirectoryTree')
         .col-md-3
           button(ng-click='save(currentOpenFileScope.item.path)') Save
-          +dirTree('tree')
+          +dirTree('tree.children')
 
         .col-md-3
           +notesList('notesInCurrentFolder')

@@ -10,7 +10,7 @@ mixin dirTree(resource)
           ng-class='item.isOpened == true ? "glyphicon-folder-open" : "glyphicon-folder-close"'
         )
         span {{ item.name }}
-        span.badge {{ getNoteCount(item.children) }}
+        span.badge {{ item.notesCount }}
 
 
 mixin notesList(notes)

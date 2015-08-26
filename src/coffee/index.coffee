@@ -68,35 +68,21 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
 
       list = fs.readdirSync dir
       info.children = []
+      info.notesCount = 0
 
-      for item in list
-        filePath = path.resolve dir, item
-        itemInfo = getInfo filePath
+      list.map (file) ->
+        result = walk(path.resolve dir, file)
+        info.children.push result
 
-        if itemInfo.isFolder
-          itemInfo.children = []
+        if not result.isFolder
+          ++info.notesCount
+        else
+          info.notesCount += result.notesCount
 
-          fs.readdirSync(filePath).map (file) ->
-            itemInfo.children.push walk(path.resolve filePath, file)
-
-        info.children.push itemInfo
 
       return info
 
     return walk dir
 
 
-  $scope.getNoteCount = (parent) ->
-    count = 0
-
-    parent.map (item) ->
-      if not item.isFolder
-        ++count
-      else if item.children.length
-        count += $scope.getNoteCount item.children
-
-    return count
-
-
   $scope.tree = $scope.getDirTree '.'
-  $scope.tree = _.sortBy($scope.tree.children, 'isFolder').reverse()
