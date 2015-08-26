@@ -1,0 +1,3 @@
+# NodeNote
+
+nw.js app
