@@ -89,9 +89,11 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
   $scope.getNoteCount = (parent) ->
     count = 0
 
-    for item in parent
+    parent.map (item) ->
       if not item.isFolder
         ++count
+      else if item.children.length
+        count += $scope.getNoteCount item.children
 
     return count
 
