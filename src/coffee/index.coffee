@@ -47,42 +47,33 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
     stream.write content
 
   $scope.getDirTree = (dir) ->
-    getInfo = (dir) ->
-      stat = fs.statSync dir
+    stat = fs.statSync dir
 
-      fileName = dir.split path.sep
-      fileName = fileName[fileName.length - 1]
+    fileName = dir.split path.sep
+    fileName = fileName[fileName.length - 1]
 
-      info =
-        isFolder: stat.isDirectory()
-        name: fileName
-        path: dir
+    info =
+      isFolder: stat.isDirectory()
+      name: fileName
+      path: dir
 
+    if not info.isFolder
       return info
 
-    walk = (dir) ->
-      info = getInfo dir
+    list = fs.readdirSync dir
+    info.children = []
+    info.notesCount = 0
 
-      if not info.isFolder
-        return info
+    list.map (file) ->
+      result = $scope.getDirTree(path.resolve dir, file)
+      info.children.push result
 
-      list = fs.readdirSync dir
-      info.children = []
-      info.notesCount = 0
+      if not result.isFolder
+        ++info.notesCount
+      else
+        info.notesCount += result.notesCount
 
-      list.map (file) ->
-        result = walk(path.resolve dir, file)
-        info.children.push result
-
-        if not result.isFolder
-          ++info.notesCount
-        else
-          info.notesCount += result.notesCount
-
-
-      return info
-
-    return walk dir
+    return info
 
 
   $scope.tree = $scope.getDirTree '.'
