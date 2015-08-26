@@ -57,21 +57,19 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
       name: fileName
       path: dir
 
-    if not info.isFolder
-      return info
+    if info.isFolder
+      list = fs.readdirSync dir
+      info.children = []
+      info.notesCount = 0
 
-    list = fs.readdirSync dir
-    info.children = []
-    info.notesCount = 0
+      list.map (file) ->
+        result = $scope.getDirTree(path.resolve dir, file)
+        info.children.push result
 
-    list.map (file) ->
-      result = $scope.getDirTree(path.resolve dir, file)
-      info.children.push result
-
-      if not result.isFolder
-        ++info.notesCount
-      else
-        info.notesCount += result.notesCount
+        if not result.isFolder
+          ++info.notesCount
+        else
+          info.notesCount += result.notesCount
 
     return info
 
