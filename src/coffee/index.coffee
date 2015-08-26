@@ -8,9 +8,10 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
   $scope.text = ''
   $scope.currentOpenFileScope = null
 
+  $scope.treeTemplate = $('#test').html()
+
 
   $scope.open = (e) ->
-    template = $('#test').html()
     element = $ e.target
     scope = element.scope()
 
@@ -21,7 +22,7 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
         return
 
       scope.item.isOpened = true
-      template = $compile(template)(scope)
+      template = $compile($scope.treeTemplate)(scope)
       element.parent().append template
       return
 
