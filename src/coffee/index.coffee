@@ -5,12 +5,15 @@ app = angular.module 'nodeNote', ['ui.tinymce']
 
 app.controller 'DirectoryTree', ($scope, $compile) ->
   $scope.text = ''
+  $scope.notesInCurrentFolder = []
   $scope.currentOpenFileScope = null
   $scope.treeTemplate = $('#dir-tree-tpl').html()
 
   $scope.open = (e) ->
     element = $ e.currentTarget
+    console.log element
     scope = element.scope()
+    console.log scope
 
     if scope.item.isFolder
       if scope.item.isOpened
@@ -21,6 +24,8 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
       scope.item.isOpened = true
 
       if scope.item.children.length
+        $scope.notesInCurrentFolder = scope.item.children
+
         template = $compile($scope.treeTemplate)(scope)
         element.parent().append template
       return
@@ -92,6 +97,3 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
 
   $scope.tree = $scope.getDirTree '.'
   $scope.tree = _.sortBy($scope.tree.children, 'isFolder').reverse()
-
-
-

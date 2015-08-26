@@ -18,14 +18,15 @@ html
 
   body(ng-app='nodeNote')
     .container-fluid
-      .row
-        .col-md-4
-          div(ng-controller='DirectoryTree')
-            button(ng-click='save(currentOpenFileScope.item.path)') Save
+      .row(ng-controller='DirectoryTree')
+        .col-md-3
+          button(ng-click='save(currentOpenFileScope.item.path)') Save
+          +dirTree('tree')
 
-            +dirTree('tree')
+        .col-md-3
+          +notesList('notesInCurrentFolder')
 
-        .col-md-8
+        .col-md-6
           textarea(ng-model='text' ui-tinymce)
 
 

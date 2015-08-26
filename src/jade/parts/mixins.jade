@@ -2,7 +2,7 @@ mixin dirTree(resource)
   ul.list-group
     li.list-group-item(
       ng-repeat='item in #{resource}'
-      ng-class='{selected: item.isOpened == true}'
+      ng-if='item.isFolder == true'
     )
       .list-group-item-inner(ng-click='open($event)')
         span.glyphicon(
@@ -10,4 +10,16 @@ mixin dirTree(resource)
           ng-class='item.isOpened == true ? "glyphicon-folder-open" : "glyphicon-folder-close"'
         )
         span {{ item.name }}
-        span.badge(ng-if='item.isFolder == true') {{ getNoteCount(item.children) }}
+        span.badge {{ getNoteCount(item.children) }}
+
+
+mixin notesList(notes)
+  ul.list-group
+    li.list-group-item(
+      ng-repeat='item in #{notes}'
+      ng-class='{selected: item.isOpened == true}'
+      ng-if='item.isFolder == false'
+    )
+      .list-group-item-inner(ng-click='open($event)')
+        span {{ item.name }}
+
