@@ -6,7 +6,7 @@ app = angular.module 'nodeNote', ['ui.tinymce']
 app.controller 'DirectoryTree', ($scope, $compile) ->
   $scope.text = ''
   $scope.currentOpenFileScope = null
-  $scope.treeTemplate = $('#test').html()
+  $scope.treeTemplate = $('#dir-tree-tpl').html()
 
   $scope.open = (e) ->
     element = $ e.target
