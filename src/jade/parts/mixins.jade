@@ -4,10 +4,13 @@ mixin dirTree(resource)
       ng-repeat='item in #{resource}'
       ng-if='item.isFolder == true'
     )
-      .list-group-item-inner(ng-click='open($event)')
+      .list-group-item-inner(
+        ng-click='open($event)'
+        ng-dblclick='unwrapFolder($event)'
+      )
         span.glyphicon.glyphicon-play.open-folder-btn(
           ng-click='unwrapFolder($event)'
-          ng-class='item.isOpened == true ? "rotate-90" : ""'
+          ng-class='item.unwrapped == true ? "rotate-90" : ""'
         )
         span.glyphicon(
           ng-class='item.isOpened == true ? "glyphicon-folder-open" : "glyphicon-folder-close"'
