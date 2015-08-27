@@ -35,7 +35,6 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
     return true
 
 
-
   $scope.openNotes = (e) ->
     scope = $(e.currentTarget).scope()
 
@@ -50,7 +49,6 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
     $scope.currentOpenFileScope = scope
     $scope.text = fs.readFileSync scope.item.path, 'utf8'
     tinyMCE.activeEditor.setContent $scope.text
-
 
 
   $scope.unwrapFolder = (e) ->
