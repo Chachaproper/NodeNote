@@ -7,26 +7,37 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
   $scope.text = ''
   $scope.notesInCurrentFolder = []
   $scope.currentOpenFileScope = null
+  $scope.currentOpenFolderScope = null
   $scope.treeTemplate = $('#dir-tree-tpl').html()
 
 
-  $scope.open = (e) ->
-    element = $ e.currentTarget
-    scope = element.scope()
-
+  $scope.openFolder = (e) ->
     if $(e.target).hasClass('open-folder-btn')
       return
 
-    if scope.item.isFolder
-      if scope.item.isOpened
-        return
+    element = $ e.currentTarget
+    scope = element.scope()
 
-      scope.item.isOpened = true
-
-      if scope.item.children.length
-        $scope.notesInCurrentFolder = scope.item.children
-
+    if scope.item.isOpened
       return
+
+    scope.item.isOpened = true
+
+    if $scope.currentOpenFolderScope
+      if $scope.currentOpenFolderScope.item.path != scope.item.path
+        $scope.currentOpenFolderScope.item.isOpened = false
+
+    $scope.currentOpenFolderScope = scope
+
+    if scope.item.children.length
+      $scope.notesInCurrentFolder = scope.item.children
+
+    return true
+
+
+
+  $scope.openNotes = (e) ->
+    scope = $(e.currentTarget).scope()
 
     scope.item.isOpened = true
 
@@ -39,6 +50,7 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
     $scope.currentOpenFileScope = scope
     $scope.text = fs.readFileSync scope.item.path, 'utf8'
     tinyMCE.activeEditor.setContent $scope.text
+
 
 
   $scope.unwrapFolder = (e) ->
@@ -56,11 +68,10 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
       return
 
     if foldersCount[0]
-      scope.item.unwrapped = true
-
       template = $compile($scope.treeTemplate)(scope)
       parent.append template
-    return true
+
+    scope.item.unwrapped = true
 
 
   $scope.save = (filePath) ->

@@ -2,18 +2,18 @@ mixin dirTree(resource)
   ul.list-group.no-select
     li.list-group-item(
       ng-repeat='item in #{resource}'
-      ng-if='item.isFolder == true'
+      ng-if='item.isFolder'
     )
       .list-group-item-inner(
-        ng-click='open($event)'
+        ng-click='openFolder($event)'
         ng-dblclick='unwrapFolder($event)'
       )
         span.glyphicon.glyphicon-play.open-folder-btn(
           ng-click='unwrapFolder($event)'
-          ng-class='item.unwrapped == true ? "rotate-90" : ""'
+          ng-class='item.unwrapped ? "rotate-90" : ""'
         )
         span.glyphicon(
-          ng-class='item.isOpened == true ? "glyphicon-folder-open" : "glyphicon-folder-close"'
+          ng-class='(item.isOpened || item.unwrapped) ? "glyphicon-folder-open" : "glyphicon-folder-close"'
         )
         span {{ item.name }}
         span.badge(ng-if='item.notesCount > 0') {{ item.notesCount }}
@@ -23,11 +23,11 @@ mixin notesList(notes)
   ul.list-group.no-select
     li.list-group-item(
       ng-repeat='item in #{notes}'
-      ng-if='item.isFolder == false'
+      ng-if='!item.isFolder'
     )
       .list-group-item-inner(
-        ng-click='open($event)'
-        ng-class='{active: item.isOpened == true}'
+        ng-click='openNotes($event)'
+        ng-class='{active: item.isOpened}'
       )
         span.glyphicon.glyphicon-file
         span {{ item.name }}
