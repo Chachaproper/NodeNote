@@ -67,7 +67,7 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
 
     if foldersCount[0]
       template = $compile($scope.treeTemplate)(scope)
-      parent.append template
+      parent.append template.hide().fadeIn('fast')
 
     scope.item.unwrapped = true
 
