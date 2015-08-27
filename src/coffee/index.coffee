@@ -30,7 +30,7 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
     $scope.currentOpenFolderScope = scope
 
     if scope.item.children.length
-      $scope.notesInCurrentFolder = scope.item.children
+      $scope.notesInCurrentFolder = $scope.getAllChildNotes scope.item.children
 
     return true
 
@@ -95,7 +95,7 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
       info.notesCount = 0
 
       list.map (file) ->
-        result = $scope.getDirTree(path.resolve dir, file)
+        result = $scope.getDirTree path.resolve dir, file
         info.children.push result
 
         if not result.isFolder
@@ -104,6 +104,18 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
           info.notesCount += result.notesCount
 
     return info
+
+
+  $scope.getAllChildNotes = (resource) ->
+    result = []
+
+    for item in resource
+      if item.isFolder
+        result = result.concat $scope.getAllChildNotes item.children
+        continue
+      result.push item
+
+    return result
 
 
   $scope.tree = $scope.getDirTree '.'
