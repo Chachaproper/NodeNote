@@ -46,6 +46,7 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
     stream = fs.createWriteStream filePath
     stream.write content
 
+
   $scope.getDirTree = (dir) ->
     stat = fs.statSync dir
 
