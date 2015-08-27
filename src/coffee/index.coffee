@@ -43,6 +43,7 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
 
   $scope.unwrapFolder = (e) ->
     element = $ e.currentTarget
+    parent = element.parents('li').first()
     scope = element.scope()
 
     foldersCount = scope.item.children.map (child) ->
@@ -51,14 +52,15 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
 
     if scope.item.unwrapped
       scope.item.unwrapped = false
-      element.parents('li').find('ul').remove()
+      parent.find('ul').remove()
       return
 
     if foldersCount[0]
       scope.item.unwrapped = true
 
       template = $compile($scope.treeTemplate)(scope)
-      element.parents('li').append template
+      parent.append template
+    return true
 
 
   $scope.save = (filePath) ->
