@@ -6,6 +6,7 @@ mixin dirTree(resource)
     )
       .list-group-item-inner(ng-click='open($event)')
         span.glyphicon.glyphicon-play.open-folder-btn(
+          ng-click='unwrapFolder($event)'
           ng-class='item.isOpened == true ? "rotate-90" : ""'
         )
         span.glyphicon(
