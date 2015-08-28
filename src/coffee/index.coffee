@@ -1,14 +1,34 @@
 fs = require 'fs'
 path = require 'path'
+gui = require 'nw.gui'
 
 app = angular.module 'nodeNote', ['ui.tinymce']
 
 app.controller 'DirectoryTree', ($scope, $compile) ->
+  $scope.basePath = '.'
   $scope.text = ''
   $scope.notesInCurrentFolder = []
   $scope.currentOpenFileScope = null
   $scope.currentOpenFolderScope = null
   $scope.treeTemplate = $('#dir-tree-tpl').html()
+
+
+  $scope.menu = new gui.Menu()
+
+  $scope.menu.append new gui.MenuItem
+    label: 'Create folder'
+    click: () ->
+      $scope.createFolder()
+
+  $scope.menu.append new gui.MenuItem
+    label: 'Create notes'
+    click: () ->
+      $scope.createNotes()
+
+  document.body.addEventListener 'contextmenu', (e) ->
+    e.preventDefault()
+    $scope.menu.popup e.x, e.y
+    return false
 
 
   $scope.openFolder = (e) ->
@@ -118,4 +138,24 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
     return result
 
 
-  $scope.tree = $scope.getDirTree '.'
+  $scope.createFolder = () ->
+    name = prompt('Name folder', 'new folder')
+
+    try
+      fs.mkdirSync $scope.basePath + path.sep + name
+    catch e
+      if e.code != 'EEXIST'
+        throw e
+
+
+  $scope.createNotes = () ->
+    name = prompt('Name notes', 'new notes')
+
+    try
+     fd = fs.openSync $scope.basePath + path.sep + name + '.html', 'w'
+    catch e
+      if e.code != 'EEXIST'
+        throw e
+
+
+  $scope.tree = $scope.getDirTree $scope.basePath
