@@ -10,7 +10,7 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
   $scope.notesInCurrentFolder = []
   $scope.currentOpenFileScope = null
   $scope.currentOpenFolderScope = null
-  $scope.treeTemplate = $('#dir-tree-tpl').html()
+  $scope.treeTemplate = document.getElementById('dir-tree-tpl').innerHTML
 
 
   $scope.menu = new gui.Menu()
