@@ -159,3 +159,16 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
 
 
   $scope.tree = $scope.getDirTree $scope.basePath
+
+  foldersCol = document.getElementById('folders-col')
+  notesCol = document.getElementById('notes-col')
+  editorCol = document.querySelector('.editor-col')
+
+  window.onresize = (e) ->
+    foldersWidth = foldersCol.clientWidth
+    notesWidth = notesCol.clientWidth
+    editorWidth = window.innerWidth - foldersWidth - notesWidth
+
+    editorCol.style.width = editorWidth
+
+
