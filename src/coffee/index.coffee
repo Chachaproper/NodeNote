@@ -4,7 +4,7 @@ gui = require 'nw.gui'
 
 app = angular.module 'nodeNote', ['ui.tinymce']
 
-app.controller 'DirectoryTree', ($scope, $compile) ->
+app.controller 'DirectoryTree', ($scope, $compile, $window) ->
   $scope.basePath = '.'
   $scope.text = ''
   $scope.notesInCurrentFolder = []
@@ -17,12 +17,12 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
 
   $scope.menu.append new gui.MenuItem
     label: 'Create folder'
-    click: () ->
+    click: ->
       $scope.createFolder()
 
   $scope.menu.append new gui.MenuItem
     label: 'Create notes'
-    click: () ->
+    click: ->
       $scope.createNotes()
 
   document.body.addEventListener 'contextmenu', (e) ->
@@ -138,7 +138,7 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
     return result
 
 
-  $scope.createFolder = () ->
+  $scope.createFolder = ->
     name = prompt('Name folder', 'new folder')
 
     try
@@ -148,7 +148,7 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
         throw e
 
 
-  $scope.createNotes = () ->
+  $scope.createNotes = ->
     name = prompt('Name notes', 'new notes')
 
     try
@@ -164,7 +164,7 @@ app.controller 'DirectoryTree', ($scope, $compile) ->
   notesCol = document.getElementById('notes-col')
   editorCol = document.querySelector('.editor-col')
 
-  window.onresize = (e) ->
+  $window.onresize = (e) ->
     foldersWidth = foldersCol.clientWidth
     notesWidth = notesCol.clientWidth
     editorWidth = window.innerWidth - foldersWidth - notesWidth
