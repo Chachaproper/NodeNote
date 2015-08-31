@@ -19,16 +19,16 @@ html
   body(ng-app='nodeNote')
     .container-fluid
       .row(ng-controller='DirectoryTree')
-        #folders-col
+        #folders-col.tree
             button(ng-click='save(currentOpenFileScope.item.path)') Save
             button(ng-click='createFolder()') Create folder
             button(ng-click='createNotes()') Create notes
             +dirTree('tree.children')
 
-        #notes-col
+        #notes-col.tree
             +notesList('notesInCurrentFolder')
 
-        .col-md-6
+        .editor-col
           textarea(ng-model='text' ui-tinymce)
 
 

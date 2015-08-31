@@ -1,5 +1,5 @@
 body
-  overflow-x: hidden
+  overflow: hidden
 
 .list-group-item
   border: none
@@ -53,10 +53,21 @@ body
   -webkit-user-select: none
   user-select: none
 
+.tree
+  overflow-y: auto
+  overflow-x: hidden
+  height: 100%
+  float: left
+
 #folders-col
   width: 200px
   min-width: 100px
+  margin-right: 20px
 
 #notes-col
   width: 200px
   min-width: 100px
+
+.editor-col
+  height: 100%
+  float: right
