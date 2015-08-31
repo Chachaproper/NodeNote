@@ -39,10 +39,11 @@ gulp
   .task('concat-js', function() {
     gulp.src([
       './node_modules/jquery/dist/jquery.min.js',
-      'node_modules/tinymce/tinymce.jquery.min.js',
-      'node_modules/angular/angular.min.js',
-      'node_modules/angular-ui-tinymce/src/tinymce.js',
-      'node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js'
+      './node_modules/tinymce/tinymce.jquery.min.js',
+      './node_modules/tinymce/themes/modern/theme.min.js',
+      './node_modules/angular/angular.min.js',
+      './node_modules/angular-ui-tinymce/src/tinymce.js',
+      './node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js'
     ])
       .pipe(concat('vendor.js'))
       .pipe(gulp.dest('./app/'))
